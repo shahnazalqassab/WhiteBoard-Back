@@ -2,7 +2,7 @@ const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 
-const userRouter = require('./Routes/userRouter')
+const userRouter = require('./Routes/userRoutes')
 const courseRouter = require('./Routes/courseRoutes')
 
 const PORT = process.env.PORT || 3001
