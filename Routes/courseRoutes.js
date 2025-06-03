@@ -7,7 +7,7 @@ const {
   getCourseById,
   updateCourse,
   deleteCourse
-} = require('../controllers/courseController');
+} = require('../controllers/courses');
 
 router.use(express.json());
 

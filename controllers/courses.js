@@ -1,4 +1,4 @@
-const Course = require('./courseModel');
+const Course = require('../Models/course');
 
 const createCourse = async (req, res) => {
   try {
@@ -56,7 +56,7 @@ const getCourseById = async (req, res) => {
   }
 };
 
-const updateCourseById = async (req, res) => {
+const updateCourse = async (req, res) => {
   try {
     const { name, lessons, ownerId } = req.body;
 
@@ -87,7 +87,7 @@ const updateCourseById = async (req, res) => {
   }
 };
 
-const deleteCourseById = async (req, res) => {
+const deleteCourse = async (req, res) => {
   try {
     await Course.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Course deleted successfully' });
