@@ -1,12 +1,32 @@
-# React + Vite
+# WhiteBoard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- A platform that will enable the teachers to upload their training courses & the trainees to enroll in the available courses anwhere, anytime.  
+---
+## Trello Documentation
+[Trello](https://trello.com/invite/b/683d446eeffe24f0efba0ba4/ATTIf21e8322c55d7f2e9f2658e4930668a9A6C91767/e-class)
+---
+## Features
 
-Currently, two official plugins are available:
+### Current Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Guests are able to navigate through the different published courses & view the overall plans.
+- Teacher can create new courses, update the lessons & accept requests of enrolled student.
+- Student can view and enroll into published courses.
+- Student can submit a homework to the lesson.
 
-## Expanding the ESLint configuration
+- User can edit his profile details (Name, password, picture)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Future Features
+- Downloading the lesson
+- Video upload
+
+---
+
+## Entities
+
+- Users
+- Courses
+- Lessons
+- Assignments
+
+---
