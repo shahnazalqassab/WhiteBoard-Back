@@ -1,5 +1,5 @@
 
-const { User } = require('../Models/Index');
+const { User } = require('../Models');
 const middleware = require('../middleware');
 
 const Register = async (req, res) => {
@@ -36,7 +36,7 @@ const Login = async (req, res) => {
       password,
       user.passwordDigest
     )
-    
+
     if (matched) {
       let payload = {
         id: user.id,
