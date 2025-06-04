@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
-const userSchema = require('./users')
-const postSchema = require('./course')
+const userSchema = require('./user')
+const courseSchema = require('./course')
 
 const User = mongoose.model('User', userSchema)
-const Course = mongoose.model('Post', postSchema)
+const Course = mongoose.model('Post', courseSchema)
 
 module.exports = {
     User,
