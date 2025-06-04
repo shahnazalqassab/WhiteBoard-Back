@@ -1,27 +1,27 @@
 
-const { User } = require('../Models')
-const middleware = require('../middleware')
+const { User } = require('../Models');
+const middleware = require('../middleware');
 
 const Register = async (req, res) => {
   try {
     const { username, name, email, password, category } = req.body
     console.log(req.body);
-    
-    let passwordDigest = await middleware.hashPassword(password)
+
     let existingUser = await User.findOne({ username })
+    console.log(existingUser);
+
     if (existingUser) {
-      return res
-        .status(400)
-        .send('A user with that email has already been registered!')
+      return res.status(400).send('This username already exists!')
     } else {
+      let passwordDigest = await middleware.hashPassword(password)
+
       const user = await User.create({ username, name, email, passwordDigest, category })
       res.status(200).send(user)
+
     }
   } catch (error) {
     console.log(error)
-    res
-      .status(401)
-      .send({ status: 'Error', msg: 'An error has occurred logging in!' })
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred signing up!' })
   }
 }
 
@@ -29,14 +29,23 @@ const Login = async (req, res) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({ username })
+
+    if (!user) {
+      return res.status(401).send({ status: 'Error', msg: 'User not found' })
+    }
+
     let matched = await middleware.comparePassword(
       password,
       user.passwordDigest
     )
+
     if (matched) {
       let payload = {
-        id: user.id,
-        username: user.username
+        _id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        category: user.category
       }
       let token = middleware.createToken(payload)
       return res.status(200).send({ user: payload, token })
@@ -50,22 +59,28 @@ const Login = async (req, res) => {
   }
 }
 
+
+
 const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
-    let user = await User.findById(req.params.user_id)
+
+    let user = await User.findById(req.params.user._id)
     let matched = await middleware.comparePassword(
       oldPassword,
       user.passwordDigest
     )
     if (matched) {
       let passwordDigest = await middleware.hashPassword(newPassword)
-      user = await User.findByIdAndUpdate(req.params.user_id, {
+      user = await User.findByIdAndUpdate(req.params.user._id, {
         passwordDigest
       })
       let payload = {
-        id: user.id,
-        email: user.email
+        _id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        category: user.category
       }
       return res.status(200).send({ status: 'Password Updated!', user: payload })
     }
