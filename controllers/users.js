@@ -26,6 +26,7 @@ const Login = async (req, res) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({ username })
+
     let matched = await middleware.comparePassword(
       password,
       user.passwordDigest
@@ -33,7 +34,9 @@ const Login = async (req, res) => {
     if (matched) {
       let payload = {
         id: user.id,
-        username: user.username
+        username: user.username,
+        email: user.email,
+        category: user.category
       }
       let token = middleware.createToken(payload)
       return res.status(200).send({ user: payload, token })
@@ -50,6 +53,7 @@ const Login = async (req, res) => {
 const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
+
     let user = await User.findById(req.params.user_id)
     let matched = await middleware.comparePassword(
       oldPassword,
@@ -62,7 +66,9 @@ const UpdatePassword = async (req, res) => {
       })
       let payload = {
         id: user.id,
-        email: user.email
+        username: user.username,
+        email: user.email,
+        category: user.category
       }
       return res.status(200).send({ status: 'Password Updated!', user: payload })
     }
