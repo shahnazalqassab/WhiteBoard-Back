@@ -29,4 +29,4 @@ const courseSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-module.exports = courseSchema
+module.exports =courseSchema ;

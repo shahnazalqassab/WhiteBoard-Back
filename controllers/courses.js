@@ -1,4 +1,8 @@
-const Course = require('../Models/course');
+const {Course} = require('../Models');
+
+const { User } = require('../Models');
+
+
 
 const createCourse = async (req, res) => {
   try {
@@ -37,6 +41,7 @@ const getAllCourses = async (req, res) => {
     const allCourses = await Course.find({}, 'name owner').populate('owner', 'name');
 
     return res.status(200).json(allCourses);
+    
   } catch (err) {
     return res.status(500).json({ message: 'Server error', error: err.message });
   }
