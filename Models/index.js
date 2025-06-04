@@ -3,7 +3,7 @@ const userSchema = require('./user')
 const courseSchema = require('./course')
 
 const User = mongoose.model('User', userSchema)
-const Course = mongoose.model('Post', courseSchema)
+const Course = mongoose.model('Course', courseSchema)
 
 module.exports = {
     User,
