@@ -5,15 +5,19 @@ const middleware = require('../middleware');
 const Register = async (req, res) => {
   try {
     const { username, name, email, password, category } = req.body
+    console.log(req.body);
+
     let existingUser = await User.findOne({ username })
+    console.log(existingUser);
 
     if (existingUser) {
       return res.status(400).send('This username already exists!')
     } else {
       let passwordDigest = await middleware.hashPassword(password)
+
       const user = await User.create({ username, name, email, passwordDigest, category })
-      console.log(user);
       res.status(200).send(user)
+
     }
   } catch (error) {
     console.log(error)
@@ -37,7 +41,8 @@ const Login = async (req, res) => {
 
     if (matched) {
       let payload = {
-        id: user.id,
+        _id: user._id,
+        name: user.name,
         username: user.username,
         email: user.email,
         category: user.category
@@ -54,22 +59,25 @@ const Login = async (req, res) => {
   }
 }
 
+
+
 const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
 
-    let user = await User.findById(req.params.user_id)
+    let user = await User.findById(req.params.user._id)
     let matched = await middleware.comparePassword(
       oldPassword,
       user.passwordDigest
     )
     if (matched) {
       let passwordDigest = await middleware.hashPassword(newPassword)
-      user = await User.findByIdAndUpdate(req.params.user_id, {
+      user = await User.findByIdAndUpdate(req.params.user._id, {
         passwordDigest
       })
       let payload = {
-        id: user.id,
+        _id: user._id,
+        name: user.name,
         username: user.username,
         email: user.email,
         category: user.category
