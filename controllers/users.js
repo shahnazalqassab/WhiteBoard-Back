@@ -1,6 +1,6 @@
 
-const { User } = require('../Models')
-const middleware = require('../middleware')
+const { User } = require('../Models/Index');
+const middleware = require('../middleware');
 
 const Register = async (req, res) => {
   try {
@@ -14,6 +14,7 @@ const Register = async (req, res) => {
     } else {
       let passwordDigest = await middleware.hashPassword(password)
       const user = await User.create({ username, name, email, passwordDigest, category })
+      console.log(user);
       res.status(200).send(user)
     }
   } catch (error) {

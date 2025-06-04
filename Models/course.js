@@ -1,26 +1,16 @@
-const mongoose = require('mongoose')
+const { Schema } = require('mongoose')
 
-const courseSchema = new mongoose.Schema(
+const courseSchema = new Schema(
   {
     name: { type: String, required: true },
     lessons: {
       title: { type: String,  required: true },
       material: { type: String, required: true },
       assignment: {
-        title: {
-          type: String,
-          required: true
-        },
-        material: {
-          type: String,
-          required: true
-        },
-        document: {
-          type: String,
-          required: true
-        }
-      }
-    },
+        title: { type: String, required: true },
+        material: { type: String, required: true },
+        document: { type: String, required: false },
+      }},
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -29,4 +19,4 @@ const courseSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-module.exports =courseSchema ;
+module.exports = courseSchema ;
