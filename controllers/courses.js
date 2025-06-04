@@ -1,5 +1,5 @@
-const {Course} = require('../Models/Index');
-const { User } = require('../Models/Index');
+const { Course } = require('../Models');
+const { User } = require('../Models');
 
 
 const createCourse = async (req, res) => {
