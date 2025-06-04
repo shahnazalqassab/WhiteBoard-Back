@@ -7,12 +7,12 @@ const Register = async (req, res) => {
     const { username, name, email, password, category } = req.body
     console.log(req.body);
 
-    let passwordDigest = await middleware.hashPassword(password)
     let existingUser = await User.findOne({ username })
 
     if (existingUser) {
-      return res.status(400).send('A user with that email has already been registered!')
+      return res.status(400).send('This username already exists!')
     } else {
+      let passwordDigest = await middleware.hashPassword(password)
       const user = await User.create({ username, name, email, passwordDigest, category })
       res.status(200).send(user)
     }
