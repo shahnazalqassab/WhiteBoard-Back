@@ -28,10 +28,15 @@ const Login = async (req, res) => {
     const { username, password } = req.body
     const user = await User.findOne({ username })
 
+    if (!user) {
+      return res.status(401).send({ status: 'Error', msg: 'User not found' })
+    }
+
     let matched = await middleware.comparePassword(
       password,
       user.passwordDigest
     )
+    
     if (matched) {
       let payload = {
         id: user.id,
