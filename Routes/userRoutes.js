@@ -9,7 +9,7 @@ const {
 } = require('../controllers/users')
 
 router.post('/user/register', Register)
-router.get('/user/login', Login)
+router.post('/user/login', Login)
 router.put('/user/:id', UpdatePassword)
 router.get('/user/session', CheckSession)
 
