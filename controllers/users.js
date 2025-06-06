@@ -14,7 +14,6 @@ const Register = async (req, res) => {
       return res.status(400).send('This username already exists!')
     } else {
       let passwordDigest = await middleware.hashPassword(password)
-
       const user = await User.create({ username, name, email, passwordDigest, category })
       res.status(200).send(user)
 
@@ -33,12 +32,10 @@ const Login = async (req, res) => {
     if (!user) {
       return res.status(401).send({ status: 'Error', msg: 'User not found' })
     }
-
     let matched = await middleware.comparePassword(
       password,
       user.passwordDigest
     )
-
     if (matched) {
       let payload = {
         _id: user._id,
