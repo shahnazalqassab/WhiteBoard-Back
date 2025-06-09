@@ -6,14 +6,20 @@ const createCourse = async (req, res) => {
   try {
     const { name, lessons, owner } = req.body;
 
-    if (!name || !lessons || !lessons.title || !lessons.material || !lessons.assignment) {
-      return res.status(400).json({ message: 'Please provide all required course and lesson details.' });
+      if (!name || !Array.isArray(lessons) || lessons.length === 0 || !owner) {
+      return res.status(401).json({ message: 'Please provide course name, at least one lesson, and owner.' })
     }
 
-    const { title, material, document } = lessons.assignment;
-
-    if (!title || !material || !document) {
-      return res.status(400).json({ message: 'Please provide all required assignment details.' });
+    for (const lesson of lessons) {
+      if (!lesson.title || !lesson.material) {
+        return res.status(400).json({ message: 'Each lesson must have a title and material.' })
+      }
+      if (lesson.assignment) {
+        const { title, material } = lesson.assignment
+        if (!title || !material) {
+          return res.status(400).json({ message: 'Each assignment must have a title and material.' })
+        }
+      }
     }
 
     const courseData = {
