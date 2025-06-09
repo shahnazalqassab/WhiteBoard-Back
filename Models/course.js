@@ -6,7 +6,7 @@ const assignmentSchema = new Schema(
     material: { type: String, required: true },
     document: { type: String, required: false },
   },
-  { _id : false } // Prevents creation of a separate _id for each assignment
+  { _id : false } 
 )
 
 const lessonSchema = new Schema(
@@ -18,7 +18,7 @@ const lessonSchema = new Schema(
       required: false,
     }
   },
-  { _id : false } // Prevents creation of a separate _id for each lesson
+  { _id : false } 
 )
 
 const courseSchema = new Schema(
