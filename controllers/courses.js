@@ -3,6 +3,8 @@ const { User } = require('../Models');
 
 
 const createCourse = async (req, res) => {
+  console.log(req.body);
+  
   try {
     const { name, owner } = req.body;
 
