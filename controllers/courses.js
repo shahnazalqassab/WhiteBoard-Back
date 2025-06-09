@@ -6,30 +6,34 @@ const createCourse = async (req, res) => {
   try {
     const { name, lessons, owner } = req.body;
 
-      if (!name || !Array.isArray(lessons) || lessons.length === 0 || !owner) {
-      return res.status(401).json({ message: 'Please provide course name, at least one lesson, and owner.' })
+    if (!name) {
+      return res.status(400).json({ message: 'Please provide course name.' });
     }
 
-    for (const lesson of lessons) {
-      if (!lesson.title || !lesson.material) {
-        return res.status(400).json({ message: 'Each lesson must have a title and material.' })
-      }
-      if (lesson.assignment) {
-        const { title, material } = lesson.assignment
-        if (!title || !material) {
-          return res.status(400).json({ message: 'Each assignment must have a title and material.' })
-        }
+if (lessons && Array.isArray(lessons)) {
+  let invalid = false;
+  lessons.forEach((lesson) => {
+    if (!lesson.title || !lesson.material) {
+      invalid = 'Each lesson must have a title and material.';
+      return;
+    }
+    if (lesson.assignment) {
+      const { title, material } = lesson.assignment;
+      if (!title || !material) {
+        invalid = 'Each assignment must have a title and material.';
+        return;
       }
     }
+  });
+  if (invalid) {
+    return res.status(400).json({ message: invalid });
+  }
+}
 
-    const courseData = {
+  const courseData = {
       name,
-      lessons: {
-        title: lessons.title,
-        material: lessons.material,
-        assignment: { title, material, document }
-      },
-      owner
+      owner,
+      lessons: lessons || []
     };
 
     const savedCourse = await Course.create(courseData);
