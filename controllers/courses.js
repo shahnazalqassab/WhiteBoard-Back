@@ -4,36 +4,16 @@ const { User } = require('../Models');
 
 const createCourse = async (req, res) => {
   try {
-    const { name, lessons, owner } = req.body;
+    const { name, owner } = req.body;
 
-    if (!name) {
-      return res.status(400).json({ message: 'Please provide course name.' });
+    if (!name || !owner) {
+      return res.status(400).json({ message: 'Please provide course name and owner.' });
     }
 
-if (lessons && Array.isArray(lessons)) {
-  let invalid = false;
-  lessons.forEach((lesson) => {
-    if (!lesson.title || !lesson.material) {
-      invalid = 'Each lesson must have a title and material.';
-      return;
-    }
-    if (lesson.assignment) {
-      const { title, material } = lesson.assignment;
-      if (!title || !material) {
-        invalid = 'Each assignment must have a title and material.';
-        return;
-      }
-    }
-  });
-  if (invalid) {
-    return res.status(400).json({ message: invalid });
-  }
-}
-
-  const courseData = {
+    const courseData = {
       name,
       owner,
-      lessons: lessons || []
+      lessons: [] // always empty on creation
     };
 
     const savedCourse = await Course.create(courseData);
