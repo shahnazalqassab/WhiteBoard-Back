@@ -1,16 +1,30 @@
 const { Schema } = require('mongoose')
 
+const assignmentSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    material: { type: String, required: true },
+    document: { type: String, required: false },
+  },
+  { _id : false } // Prevents creation of a separate _id for each assignment
+)
+
+const lessonSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    material: { type: String, required: true },
+    assignment: {
+      type: assignmentSchema,
+      required: false,
+    }
+  },
+  { _id : false } // Prevents creation of a separate _id for each lesson
+)
+
 const courseSchema = new Schema(
   {
     name: { type: String, required: true },
-    lessons: {
-      title: { type: String,  required: true },
-      material: { type: String, required: true },
-      assignment: {
-        title: { type: String, required: true },
-        material: { type: String, required: true },
-        document: { type: String, required: false },
-      }},
+    lessons: [lessonSchema],
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',

@@ -13,7 +13,7 @@ const createCourse = async (req, res) => {
     const { title, material, document } = lessons.assignment;
 
     if (!title || !material || !document) {
-      return res.status(400).json({ message: 'Please provide all required assignment details.' });
+      return res.status(401).json({ message: 'Please provide all required assignment details.' });
     }
 
     const courseData = {
