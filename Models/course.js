@@ -24,7 +24,11 @@ const lessonSchema = new Schema(
 const courseSchema = new Schema(
   {
     name: { type: String, required: true },
-    lessons: [lessonSchema],
+    lessons: {
+      type: [lessonSchema],
+      required: false,
+      default: []
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
