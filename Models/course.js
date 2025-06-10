@@ -32,7 +32,19 @@ const courseSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-    }
+    },
+    students: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ],
+    pendingEnrollments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   { timestamps: true }
 )
