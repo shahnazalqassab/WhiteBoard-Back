@@ -58,35 +58,22 @@ const Login = async (req, res) => {
 
 
 
-const UpdatePassword = async (req, res) => {
+const UpdateProfile = async (req, res) => {
+  const { name, email, password } = req.body
   try {
-    const { oldPassword, newPassword } = req.body
+    const user = await User.findById(req.user._id)
 
-    let user = await User.findById(req.params.user._id)
-    let matched = await middleware.comparePassword(
-      oldPassword,
-      user.passwordDigest
-    )
-    if (matched) {
-      let passwordDigest = await middleware.hashPassword(newPassword)
-      user = await User.findByIdAndUpdate(req.params.user._id, {
-        passwordDigest
-      })
-      let payload = {
-        _id: user._id,
-        name: user.name,
-        username: user.username,
-        email: user.email,
-        category: user.category
-      }
-      return res.status(200).send({ status: 'Password Updated!', user: payload })
-    }
-    res.status(401).send({ status: 'Error', msg: 'Old Password did not match!' })
+    if (name) user.name = name
+    if (email) user.email = email
+    if (password) user. passwordDigest = await middleware.hashPassword(password)
+
+      await user.save();
+      res.status(200).send({ status: 'Profile updated successfully!', user })
   } catch (error) {
     console.log(error)
     res.status(401).send({
       status: 'Error',
-      msg: 'An error has occurred updating password!'
+      msg: 'An error has occurred updating profile!'
     })
   }
 }
@@ -99,6 +86,6 @@ const CheckSession = async (req, res) => {
 module.exports = {
   Register,
   Login,
-  UpdatePassword,
+  UpdateProfile,
   CheckSession
 }
