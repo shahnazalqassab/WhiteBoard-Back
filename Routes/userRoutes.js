@@ -5,7 +5,7 @@ const middleware = require('../middleware')
 
 router.post('/register', ctrl.Register)
 router.post('/login', ctrl.Login)
-router.put('/update/:id', middleware.stripToken, middleware.verifyToken, ctrl.UpdatePassword)
+router.put('/profile', middleware.stripToken, middleware.verifyToken, ctrl.UpdateProfile)
 router.get('/session', middleware.stripToken, middleware.verifyToken, ctrl.CheckSession)
 
 module.exports = router
