@@ -3,7 +3,7 @@ const { Schema } = require('mongoose')
 const assignmentSchema = new Schema(
   {
     title: { type: String, required: true },
-    material: { type: String, required: true },
+    description: { type: String, required: true },
     document: { type: String, required: false },
   },
   { _id : false } 
@@ -12,7 +12,7 @@ const assignmentSchema = new Schema(
 const lessonSchema = new Schema(
   {
     title: { type: String, required: true },
-    material: { type: String, required: true },
+    description: { type: String, required: true },
     assignment: {
       type: assignmentSchema,
       required: false,
@@ -24,6 +24,7 @@ const lessonSchema = new Schema(
 const courseSchema = new Schema(
   {
     name: { type: String, required: true },
+    description: { type: String, required: true },
     lessons: {
       type: [lessonSchema],
       required: false,
