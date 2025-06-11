@@ -22,7 +22,8 @@ const createCourse = async (req, res) => {
     const populatedCourse = await Course.findById(savedCourse._id).populate('owner');
 
     res.status(201).json(populatedCourse);
-  } catch (error) {
+  } 
+  catch (error) {
     if (error.name === 'ValidationError') return res.status(400).json({ message: error.message });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
