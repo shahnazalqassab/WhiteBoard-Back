@@ -18,7 +18,7 @@ const createCourse = async (req, res) => {
 
     const courseData = { name, owner, description };
     console.log('Creating course with data:', courseData);
-    
+
     const savedCourse = await Course.create(courseData);
     const populatedCourse = await Course.findById(savedCourse._id).populate('owner');
 
@@ -60,7 +60,7 @@ const getCourseById = async (req, res) => {
 
 const updateCourse = async (req, res) => {
   try {
-    const { name, lessons, owner } = req.body;
+    const { name, description, owner } = req.body;
     const courseId = req.params.id;
 
     if (owner) {
@@ -71,7 +71,7 @@ const updateCourse = async (req, res) => {
     const updateData = {};
     if (name) updateData.name = name;
     if (owner) updateData.owner = owner;
-    if (lessons) updateData.lessons = lessons;
+    if (description) updateData.description = description;
 
     const updatedCourse = await Course.findByIdAndUpdate(courseId, updateData, {
       new: true,
