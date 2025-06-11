@@ -8,7 +8,6 @@ const getUserId = (req, res) => {
 };
 
 const createCourse = async (req, res) => {
-  console.log('Creating course with body:', req.body);
   
   try {
     const { name, owner, description } = req.body;
@@ -18,6 +17,8 @@ const createCourse = async (req, res) => {
     if (!ownerExists) return res.status(400).json({ message: 'Owner user does not exist' });
 
     const courseData = { name, owner, description };
+    console.log('Creating course with data:', courseData);
+    
     const savedCourse = await Course.create(courseData);
     const populatedCourse = await Course.findById(savedCourse._id).populate('owner');
 
