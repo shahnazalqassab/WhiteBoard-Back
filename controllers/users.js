@@ -65,11 +65,7 @@ const Login = async (req, res) => {
 const UpdateProfile = async (req, res) => {
   const { name, email, password } = req.body
   try {
-    if (!req.user) {
-      return res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
-    }
-
-    const user = await User.findById(req.user._id)
+    const user = await User.findById(req.body._id)
 
     if (!user) {
       return res.status(404).send({ status: 'Error', msg: 'User not found' })
