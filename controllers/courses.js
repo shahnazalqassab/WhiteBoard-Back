@@ -8,14 +8,16 @@ const getUserId = (req, res) => {
 };
 
 const createCourse = async (req, res) => {
+  console.log('Creating course with body:', req.body);
+  
   try {
-    const { name, owner } = req.body;
+    const { name, owner, description } = req.body;
     if (!name || !owner) return res.status(400).json({ message: 'Please provide course name and owner.' });
 
     const ownerExists = await User.exists({ _id: owner });
     if (!ownerExists) return res.status(400).json({ message: 'Owner user does not exist' });
 
-    const courseData = { name, owner, lessons: [] };
+    const courseData = { name, owner, description };
     const savedCourse = await Course.create(courseData);
     const populatedCourse = await Course.findById(savedCourse._id).populate('owner');
 
@@ -25,6 +27,8 @@ const createCourse = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+
 
 const getAllCourses = async (req, res) => {
   try {
@@ -37,6 +41,7 @@ const getAllCourses = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
 
 const getCourseById = async (req, res) => {
   try {
