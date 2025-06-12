@@ -23,7 +23,8 @@ const createCourse = async (req, res) => {
     const populatedCourse = await Course.findById(savedCourse._id).populate('owner');
 
     res.status(201).json(populatedCourse);
-  } catch (error) {
+  } 
+  catch (error) {
     if (error.name === 'ValidationError') return res.status(400).json({ message: error.message });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -58,9 +59,10 @@ const getCourseById = async (req, res) => {
   }
 };
 
+
 const updateCourse = async (req, res) => {
   try {
-    const { name, description, owner } = req.body;
+    const { name, description, owner, lessons } = req.body; 
     const courseId = req.params.id;
 
     if (owner) {
@@ -72,6 +74,7 @@ const updateCourse = async (req, res) => {
     if (name) updateData.name = name;
     if (owner) updateData.owner = owner;
     if (description) updateData.description = description;
+    if (lessons) updateData.lessons = lessons; 
 
     const updatedCourse = await Course.findByIdAndUpdate(courseId, updateData, {
       new: true,
@@ -81,13 +84,13 @@ const updateCourse = async (req, res) => {
     if (!updatedCourse) return res.status(404).json({ message: 'Course not found' });
 
     res.status(200).json(updatedCourse);
+
   } catch (error) {
     if (error.name === 'CastError') return res.status(400).json({ message: 'Invalid course ID format' });
     if (error.name === 'ValidationError') return res.status(400).json({ message: error.message });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
 const deleteCourse = async (req, res) => {
   try {
     const deletedCourse = await Course.findByIdAndDelete(req.params.id);

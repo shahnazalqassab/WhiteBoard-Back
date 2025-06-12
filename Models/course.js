@@ -13,9 +13,10 @@ const lessonSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    assignment: {
-      type: assignmentSchema,
+    assignment: { 
+      type: [assignmentSchema], 
       required: false,
+      default: []
     }
   },
   { _id : false } 
