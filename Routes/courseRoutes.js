@@ -26,7 +26,7 @@ router.get('/owner/:id', stripToken, verifyToken, getCoursesByOwner);
 router.get('/student/:id', stripToken, verifyToken, getCoursesByStudent);
 
 router.post('/:id/enroll', stripToken, verifyToken, requestEnrollment);
-router.post('/:id/enrollments/:studentId/accept', stripToken, verifyToken, acceptEnrollment);
-router.post('/:id/enrollments/:studentId/decline', stripToken, verifyToken, declineEnrollment);
+router.post('/:id/enroll/:studentId/accept', stripToken, verifyToken, acceptEnrollment);
+router.post('/:id/enroll/:studentId/decline', stripToken, verifyToken, declineEnrollment);
 
 module.exports = router;
