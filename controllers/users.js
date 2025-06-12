@@ -10,7 +10,7 @@ const Register = async (req, res) => {
     console.log(existingUser)
 
     if (existingUser) {
-      return res.status(400).send('This username already exists!')
+      return res.status(400).send({status: 'Error', msg: 'This username already exists!'})
     } else {
       let passwordDigest = await middleware.hashPassword(password)
       const user = await User.create({
@@ -53,7 +53,7 @@ const Login = async (req, res) => {
       let token = middleware.createToken(payload)
       return res.status(200).send({ user: payload, token })
     }
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    res.status(401).send({ status: 'Error', msg: 'Wrong Password' })
   } catch (error) {
     console.log(error)
     res
