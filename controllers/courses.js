@@ -144,6 +144,7 @@ const acceptEnrollment = async (req, res) => {
   }
 };
 
+
 const declineEnrollment = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -168,6 +169,25 @@ const declineEnrollment = async (req, res) => {
   }
 };
 
+
+const getCoursesByOwner = async (req, res) => {
+  try {
+    const ownerId = req.params.id;
+    const courses = await Course.find({ owner: ownerId })
+      .populate('owner', 'name email')
+      .populate('students', 'name email')
+      .populate('pendingEnrollments', 'name email');
+
+    if (!courses || courses.length === 0) {
+      return res.status(404).json({ message: 'No courses found for this owner' });
+    }
+
+    res.status(200).json(courses);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
 module.exports = {
   createCourse,
   getAllCourses,
@@ -177,4 +197,5 @@ module.exports = {
   requestEnrollment,
   acceptEnrollment,
   declineEnrollment,
+  getCoursesByOwner,
 };

@@ -8,7 +8,8 @@ const {
   deleteCourse,
   requestEnrollment,
   acceptEnrollment,
-  declineEnrollment
+  declineEnrollment,
+  getCoursesByOwner
 } = require('../controllers/courses');
 const { stripToken, verifyToken } = require('../middleware'); 
 
@@ -19,6 +20,7 @@ router.get('/', getAllCourses);
 router.get('/:id', getCourseById);
 router.put('/:id', updateCourse);
 router.delete('/:id', deleteCourse);
+router.get('/owner/:id', stripToken, verifyToken, getCoursesByOwner);
 
 router.post('/:id/enroll', stripToken, verifyToken, requestEnrollment);
 router.post('/:id/enrollments/:studentId/accept', stripToken, verifyToken, acceptEnrollment);
